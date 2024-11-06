@@ -44,7 +44,6 @@ from airflow.providers.snowflake.transfers.copy_into_snowflake import CopyFromEx
 SNOWFLAKE_CONN_ID = 'snowflake_conn'#
 SNOWFLAKE_DATABASE = 'airflow1007'#
 SNOWFLAKE_SCHEMA = 'bf_dev'#
-SNOWFLAKE_TABLE = 'PRESTAGE_LABEVENTS_4'
 
 # SNOWFLAKE_ROLE = 'AW_developer'
 # SNOWFLAKE_WAREHOUSE = 'aw_etl'
@@ -63,7 +62,7 @@ with DAG(
     copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
         task_id='prestg_product_order_trans',
         files=['Labevents_4_{{ ds_nodash }}.csv'],
-        table=SNOWFLAKE_TABLE,
+        table='prestage_labevents_4',
         schema=SNOWFLAKE_SCHEMA,
         database=SNOWFLAKE_DATABASE,
         stage=SNOWFLAKE_STAGE,
