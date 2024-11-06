@@ -65,6 +65,7 @@ with DAG(
         files=['Labevents_4_{{ ds_nodash }}.csv'],
         table=SNOWFLAKE_TABLE,
         schema=SNOWFLAKE_SCHEMA,
+        database=SNOWFLAKE_DATABASE,
         stage=SNOWFLAKE_STAGE,
         file_format='''(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1 \
             NULL_IF =('NULL','null',''), empty_field_as_null = true, FIELD_OPTIONALLY_ENCLOSED_BY = '\"' \
