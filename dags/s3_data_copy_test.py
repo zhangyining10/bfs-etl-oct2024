@@ -71,4 +71,12 @@ with DAG(
             ESCAPE_UNENCLOSED_FIELD = NONE RECORD_DELIMITER = '\n')''',
     )
 
-    copy_into_prestg
+    check_context = SnowflakeOperator(
+        task_id='check_database_context',
+        sql='SELECT CURRENT_DATABASE(), CURRENT_SCHEMA();',
+        database=SNOWFLAKE_DATABASE,
+        schema=SNOWFLAKE_SCHEMA,
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
+    )
+
+    check_context >> copy_into_prestg
