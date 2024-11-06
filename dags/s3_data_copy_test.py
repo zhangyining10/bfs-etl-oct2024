@@ -44,7 +44,7 @@ from airflow.providers.snowflake.transfers.copy_into_snowflake import CopyFromEx
 SNOWFLAKE_CONN_ID = 'snowflake_conn'#
 SNOWFLAKE_DATABASE = 'airflow1007'#
 SNOWFLAKE_SCHEMA = 'bf_dev'#
-SNOWFLAKE_TABLE = 'prestage_labevents_4'
+SNOWFLAKE_TABLE = 'PRESTAGE_LABEVENTS_4'
 
 # SNOWFLAKE_ROLE = 'AW_developer'
 # SNOWFLAKE_WAREHOUSE = 'aw_etl'
