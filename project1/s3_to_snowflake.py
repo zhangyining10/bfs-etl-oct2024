@@ -32,7 +32,7 @@ with DAG(
         table=SNOWFLAKE_TABLE,
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         warehouse=SNOWFLAKE_WAREHOUSE,
-        database=SNOWFLAKE_DATABASE,
+        database="AIRFLOW1007",
         role=SNOWFLAKE_ROLE,
         schema=SNOWFLAKE_SCHEMA,
         stage=SNOWFLAKE_STAGE,
