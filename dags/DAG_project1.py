@@ -7,6 +7,8 @@ from datetime import datetime
 from airflow import DAG
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 from airflow.providers.snowflake.transfers.copy_into_snowflake import CopyFromExternalStageToSnowflakeOperator
+from airflow.providers.snowflake.transfers.copy_into_snowflake import S3ToSnowflakeOperator
+
 
 
 SNOWFLAKE_CONN_ID = 'snowflake_conn'
@@ -16,6 +18,11 @@ SNOWFLAKE_SCHEMA = 'BF_DEV'
 SNOWFLAKE_ROLE = 'AW_developer'
 SNOWFLAKE_WAREHOUSE = 'aw_etl'
 SNOWFLAKE_STAGE = 's3_stage_trans_order'
+
+S3_FILE_PATH_TEMPLATE = 's3://octde2024/airflow_project/Transaction_Team3_{{ ds_nodash }}.csv'
+SNOWFLAKE_SAMPLE_TABLE = 'prestage_Transaction_Team3'
+
+
 
 with DAG(
     "s3_to_snowflake_incremental_load",
@@ -50,15 +57,14 @@ with DAG(
         role=SNOWFLAKE_ROLE,
     )
 
-    copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
-        task_id='copy_into_table',
+    copy_into_prestg = S3ToSnowflakeOperator(
+        task_id="copy_into_table",
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
+        s3_keys=[S3_FILE_PATH_TEMPLATE],
+        table=SNOWFLAKE_SAMPLE_TABLE,
         stage=SNOWFLAKE_STAGE,
-        table='prestage_Transaction_Team3',
-        schema=SNOWFLAKE_SCHEMA,
-        files=['Transaction_Team3_{{ ds_nodash }}.csv'],
         file_format="(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1, NULL_IF = ('NULL', 'null', ''), empty_field_as_null = true, FIELD_OPTIONALLY_ENCLOSED_BY = '\"')",
-        pattern=".*[.]csv",
+        pattern=".*[.]csv",  
     )
 
     create_prestage_table >> copy_into_prestg
