@@ -28,7 +28,7 @@ with DAG(
         task_id='prestg_sales_data',
         files=['SalesData_Group6_{{ ds }}.csv'],
         # @TODO change to our table name if not already
-        table='test_tran',
+        table='TEST_TRAN',
         schema=SNOWFLAKE_SCHEMA,
         stage=SNOWFLAKE_STAGE,
         file_format='''(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1 \
