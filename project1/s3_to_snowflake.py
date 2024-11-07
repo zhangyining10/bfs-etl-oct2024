@@ -17,12 +17,12 @@ SNOWFLAKE_TABLE = 'PRESTAGE_SALESDATA_6'
 
 with DAG(
     "project1_s3_to_snowflake",
-    start_date = datetime(2024, 11, 7),
-    end_date = datetime(2024, 11, 9),
-    schedule_interval='*/5 * * * *', # send the data to snowflake every day at midnight
+    start_date = datetime(2024, 11, 6),
+    end_date = datetime(2024, 11, 8),
+    schedule_interval='0 0 * * *', # send the data to snowflake every day at midnight
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     tags=['team6project1'],
-    catchup=False,
+    catchup=True,
 ) as dag:
     
     copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
