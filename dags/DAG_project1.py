@@ -13,8 +13,8 @@ SNOWFLAKE_CONN_ID = 'snowflake_conn'
 SNOWFLAKE_DATABASE = 'AIRFLOW1007'
 SNOWFLAKE_SCHEMA = 'BF_DEV'
 
-# SNOWFLAKE_ROLE = 'AW_developer'
-# SNOWFLAKE_WAREHOUSE = 'aw_etl'
+SNOWFLAKE_ROLE = 'AW_developer'
+SNOWFLAKE_WAREHOUSE = 'aw_etl'
 SNOWFLAKE_STAGE = 's3_stage_trans_order'
 
 with DAG(
@@ -25,6 +25,29 @@ with DAG(
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     catchup=True,
 ) as dag:
+    
+    create_prestage_table = SnowflakeOperator(
+        task_id="create_prestage_transaction_team3",
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
+        sql="""
+            create or replace TABLE AIRFLOW1007.BF_DEV.PRESTAGE_TRANSACTION_TEAM3 (
+                TRANSACTIONID NUMBER(10,0),
+                DATE DATE,
+                CUSTOMERID NUMBER(10,0),
+                PRODUCTID NUMBER(10,0),
+                QUANTITY NUMBER(5,0),
+                PRICE NUMBER(10,2),
+                TOTALAMOUNT NUMBER(15,2),
+                PAYMENTMETHOD VARCHAR(20),
+                STORELOCATION VARCHAR(50),
+                EMPLOYEEID NUMBER(10,0)
+            );
+        """,
+        warehouse=SNOWFLAKE_WAREHOUSE,
+        database=SNOWFLAKE_DATABASE,
+        schema=SNOWFLAKE_SCHEMA,
+        role=SNOWFLAKE_ROLE,
+    )
 
     copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
         task_id='copy_from_s3_to_snowflake',
@@ -37,7 +60,7 @@ with DAG(
             ESCAPE_UNENCLOSED_FIELD = NONE RECORD_DELIMITER = '\n')''',
     )
 
-    copy_into_prestg
+    create_prestage_table >> copy_into_prestg
           
         
     
