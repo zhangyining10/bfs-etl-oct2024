@@ -21,7 +21,7 @@ with DAG(
     "s3_to_snowflake_incremental_load",
     start_date=datetime(2024, 11, 6),
     end_date = datetime(2024, 11, 8),
-    schedule_interval='* * * * *',# UTC timezone, everyday at 1am
+    schedule_interval='0 1 * * *',# UTC timezone, everyday at 1am
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     catchup=True,
     tags=['Team3']
