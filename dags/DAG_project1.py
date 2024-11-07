@@ -44,7 +44,7 @@ with DAG(
                 QUANTITY NUMBER(5,0),
                 PRICE NUMBER(10,2),
                 TOTALAMOUNT NUMBER(15,2),
-                  PAYMENTMETHOD VARCHAR(20),
+                PAYMENTMETHOD VARCHAR(20),
                 STORELOCATION VARCHAR(50),
                 EMPLOYEEID NUMBER(10,0)
             );
