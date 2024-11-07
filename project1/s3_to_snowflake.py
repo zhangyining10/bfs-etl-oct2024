@@ -29,7 +29,7 @@ with DAG(
         task_id='prestg_sales_data',
         files=['SalesData_Group6_{{ ds }}.csv'],
         # @TODO change to our table name if not already
-        table="AIRFLOW1007.BF_DEV.TEST_TRAN",
+        table="TEST_TRAN",
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         warehouse=SNOWFLAKE_WAREHOUSE,
         role=SNOWFLAKE_ROLE,
