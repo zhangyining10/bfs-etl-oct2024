@@ -31,7 +31,7 @@ with DAG(
         task_id="create_prestage_transaction_team3",
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         sql="""
-            create or replace TABLE AIRFLOW1007.BF_DEV.PRESTAGE_TRANSACTIONs_TEAM3 (
+            create or replace TABLE AIRFLOW1007.BF_DEV.PRESTAGE_TRANSACTION_TEAM3 (
                 TRANSACTIONID NUMBER(10,0),
                 DATE DATE,
                 CUSTOMERID NUMBER(10,0),
@@ -39,7 +39,7 @@ with DAG(
                 QUANTITY NUMBER(5,0),
                 PRICE NUMBER(10,2),
                 TOTALAMOUNT NUMBER(15,2),
-                PAYMENTMETHOD VARCHAR(20),
+                  PAYMENTMETHOD VARCHAR(20),
                 STORELOCATION VARCHAR(50),
                 EMPLOYEEID NUMBER(10,0)
             );
@@ -51,14 +51,14 @@ with DAG(
     )
 
     copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
-        task_id='copy_from_s3_to_snowflake',
-        files=['Transaction_Team3_{{ ds_nodash }}.csv'],
-        table=' prestage_Transaction_Team3',
-        schema=SNOWFLAKE_SCHEMA,
+        task_id='copy_into_table',
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
         stage=SNOWFLAKE_STAGE,
-        file_format='''(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1 \
-            NULL_IF =('NULL','null',''), empty_field_as_null = true, FIELD_OPTIONALLY_ENCLOSED_BY = '\"' \
-            ESCAPE_UNENCLOSED_FIELD = NONE RECORD_DELIMITER = '\n')''',
+        table='prestage_Transaction_Team3',
+        schema=SNOWFLAKE_SCHEMA,
+        files=['Transaction_Team3_{{ ds_nodash }}.csv'],
+        file_format="(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1, NULL_IF = ('NULL', 'null', ''), empty_field_as_null = true, FIELD_OPTIONALLY_ENCLOSED_BY = '\"')",
+        pattern=".*[.]csv",
     )
 
     create_prestage_table >> copy_into_prestg
