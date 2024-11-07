@@ -18,7 +18,7 @@ with DAG(
     "project1_s3_to_snowflake",
     start_date = datetime(2024, 11, 6),
     end_date = datetime(2024, 11, 9),
-    schedule_interval='*/5 19 * * *', # send the data to snowflake every day at midnight
+    schedule_interval='*/5 * * * *', # send the data to snowflake every day at midnight
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     tags=['team6project1'],
     catchup=True,
