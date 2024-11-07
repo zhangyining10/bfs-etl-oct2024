@@ -21,7 +21,7 @@ with DAG(
     "s3_to_snowflake_incremental_load",
     start_date=datetime(2024, 11, 6),
     end_date = datetime(2024, 11, 8),
-    schedule_interval='0 1 * * *',# UTC timezone, everyday at 1am
+    schedule_interval='* * * * *',# UTC timezone, everyday at 1am
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     catchup=True,
     tags=['Team3']
@@ -31,7 +31,7 @@ with DAG(
         task_id="create_prestage_transaction_team3",
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         sql="""
-            create or replace TABLE AIRFLOW1007.BF_DEV.PRESTAGE_TRANSACTION_TEAM3 (
+            create or replace TABLE AIRFLOW1007.BF_DEV.PRESTAGE_TRANSACTIONs_TEAM3 (
                 TRANSACTIONID NUMBER(10,0),
                 DATE DATE,
                 CUSTOMERID NUMBER(10,0),
