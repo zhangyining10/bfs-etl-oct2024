@@ -9,9 +9,9 @@ SNOWFLAKE_CONN_ID = 'snowflake_conn'
 SNOWFLAKE_DATABASE = 'AIRFLOW1007'
 SNOWFLAKE_SCHEMA = 'BF_DEV'
 
-SNOWFLAKE_ROLE = 'AW_developer'
-SNOWFLAKE_WAREHOUSE = 'aw_etl'
-SNOWFLAKE_STAGE = 's3_stage_trans_order'
+SNOWFLAKE_ROLE = 'BF_DEVELOPER1007'
+SNOWFLAKE_WAREHOUSE = 'BF_ETL1007'
+SNOWFLAKE_STAGE = 'S3_STAGE_TRANS_ORDER'
 
 
 with DAG(
@@ -28,7 +28,7 @@ with DAG(
         task_id='prestg_sales_data',
         files=['SalesData_Group6_{{ ds }}.csv'],
         # @TODO change to our table name if not already
-        table='prestage_TableName_Group6',
+        table='test_tran',
         schema=SNOWFLAKE_SCHEMA,
         stage=SNOWFLAKE_STAGE,
         file_format='''(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1 \
