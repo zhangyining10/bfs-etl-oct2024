@@ -9,7 +9,7 @@ SNOWFLAKE_CONN_ID = 'snowflake_conn'
 SNOWFLAKE_DATABASE = 'AIRFLOW1007'
 SNOWFLAKE_SCHEMA = 'BF_DEV'
 
-SNOWFLAKE_ROLE = 'BF_DEVELOPER1007'
+SNOWFLAKE_ROLE = 'PUBLIC'
 SNOWFLAKE_WAREHOUSE = 'BF_ETL1007'
 SNOWFLAKE_STAGE = 'S3_STAGE_TRANS_ORDER'
 SNOWFLAKE_TABLE = 'TEST_TRAN'
@@ -36,7 +36,6 @@ with DAG(
         role=SNOWFLAKE_ROLE,
         schema=SNOWFLAKE_SCHEMA,
         stage=SNOWFLAKE_STAGE,
-        account='JIYUXIN',
         file_format='''(type = 'CSV', field_delimiter = ',', SKIP_HEADER = 1 \
             NULL_IF =('NULL','null',''), empty_field_as_null = true, FIELD_OPTIONALLY_ENCLOSED_BY = '\"' \
             ESCAPE_UNENCLOSED_FIELD = NONE RECORD_DELIMITER = '\n')''',
