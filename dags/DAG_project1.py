@@ -24,6 +24,7 @@ with DAG(
     schedule_interval='* * * * *',# UTC timezone, everyday at 1am
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     catchup=True,
+    tags=['Team3']
 ) as dag:
     
     create_prestage_table = SnowflakeOperator(
