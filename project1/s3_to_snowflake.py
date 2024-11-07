@@ -29,10 +29,9 @@ with DAG(
         task_id='prestg_sales_data',
         files=['SalesData_Group6_{{ ds }}.csv'],
         # @TODO change to our table name if not already
-        table=SNOWFLAKE_TABLE,
+        table="AIRFLOW1007.BF_DEV.TEST_TRAN",
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         warehouse=SNOWFLAKE_WAREHOUSE,
-        database=SNOWFLAKE_DATABASE,
         role=SNOWFLAKE_ROLE,
         schema=SNOWFLAKE_SCHEMA,
         stage=SNOWFLAKE_STAGE,
