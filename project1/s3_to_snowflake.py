@@ -12,7 +12,7 @@ SNOWFLAKE_SCHEMA = 'BF_DEV'
 SNOWFLAKE_ROLE = 'BF_DEVELOPER1007'
 SNOWFLAKE_WAREHOUSE = 'BF_ETL1007'
 SNOWFLAKE_STAGE = 'S3_STAGE_TRANS_ORDER'
-SNOWFLAKE_TABLE = 'TEST_TRAN'
+SNOWFLAKE_TABLE = 'PRESTAGE_SALESDATA_6'
 
 
 with DAG(
@@ -29,7 +29,7 @@ with DAG(
         task_id='prestg_sales_data',
         files=['SalesData_Group6_{{ ds }}.csv'],
         # @TODO change to our table name if not already
-        table="TEST_TRAN",
+        table=SNOWFLAKE_TABLE,
         snowflake_conn_id=SNOWFLAKE_CONN_ID,
         warehouse=SNOWFLAKE_WAREHOUSE,
         role=SNOWFLAKE_ROLE,
