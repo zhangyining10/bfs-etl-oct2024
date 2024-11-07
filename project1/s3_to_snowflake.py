@@ -22,7 +22,7 @@ with DAG(
     schedule_interval='*/5 * * * *', # send the data to snowflake every day at midnight
     default_args={'snowflake_conn_id': SNOWFLAKE_CONN_ID},
     tags=['team6project1'],
-    catchup=True,
+    catchup=False,
 ) as dag:
     
     copy_into_prestg = CopyFromExternalStageToSnowflakeOperator(
